@@ -8,23 +8,19 @@ import json
 # Initializing our blockchain list
 MINING_REWARD = 10
 
-genesis_block = {
-  'previous_hash': '',
-  'index': 0,
-  'transactions': [],
-  'proof': 100
-}
-blockchain = [genesis_block]
+blockchain = []
 open_transactions = []
+
 owner = 'Max'
 participants = {'Max'}
 
 
 def load_data():
   """Initialize blockchain + open transactions data from a file."""
+  global blockchain
+  global open_transactions
+
   try:
-    global blockchain
-    global open_transactions
     with open('blockchain.txt', mode='r') as f:
       # file_content = pickle.loads(f.read())
       file_content = f.readlines()
@@ -52,11 +48,14 @@ def load_data():
         updated_transactions.append(updated_transaction)
       open_transactions = updated_transactions
   except IOError:
-    print('File not found!')
-  except ValueError:
-    print('Value error!')
-  except:
-    print('Wildcard!')
+    genesis_block = {
+      'previous_hash': '',
+      'index': 0,
+      'transactions': [],
+      'proof': 100
+    }
+    blockchain = [genesis_block]
+    open_transactions = []
   finally:
     print('Cleanup!')
 
@@ -66,16 +65,18 @@ load_data()
 
 def save_data():
   """Save blockchain + open transactions snapshot to a file."""
-  with open('blockchain.txt', mode='w') as f:
-    f.write(json.dumps(blockchain))
-    f.write('\n')
-    f.write(json.dumps(open_transactions))
-    # save_data = {
-    #     'chain': blockchain,
-    #     'ot': open_transactions
-    # }
-    # f.write(pickle.dumps(save_data))
-  print('Saving failed!')
+  try:
+    with open('blockchain.txt', mode='w') as f:
+      f.write(json.dumps(blockchain))
+      f.write('\n')
+      f.write(json.dumps(open_transactions))
+      # save_data = {
+      #     'chain': blockchain,
+      #     'ot': open_transactions
+      # }
+      # f.write(pickle.dumps(save_data))
+  except IOError:
+    print('Saving failed!')
 
 
 def valid_proof(transactions, last_hash, proof):
