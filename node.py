@@ -1,7 +1,7 @@
 from uuid import uuid4
 
 from blockchain import Blockchain
-from veryfication import Veryfication
+from utility.veryfication import Veryfication
 
 class Node:
     def __init__(self):
