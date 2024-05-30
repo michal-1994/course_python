@@ -9,12 +9,10 @@ class Node:
         tx_amount = float(input('Your transaction amount please: '))
         return tx_recipient, tx_amount
 
-
     def get_user_choice(self):
         """Prompts the user for its choice and return it."""
         user_input = input('Your choice: ')
         return user_input
-
 
     def print_blockchain_elements(self):
         """ Output all blocks of the blockchain. """
@@ -24,7 +22,6 @@ class Node:
             print(block)
         else:
             print('-' * 20)
-
 
     def listen_for_input(self):
         waiting_for_input = True
