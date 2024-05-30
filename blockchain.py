@@ -65,8 +65,7 @@ class Blockchain:
         last_hash = hash_block(last_block)
         proof = 0
         # Try different PoW numbers and return the first valid one
-        veryfier = Veryfication()
-        while not veryfier.valid_proof(self.open_transactions, last_hash, proof):
+        while not Veryfication.valid_proof(self.open_transactions, last_hash, proof):
             proof += 1
         return proof
 
@@ -113,8 +112,7 @@ class Blockchain:
             :amount: The amount of coins sent with the transaction (default = 1.0)
         """
         transaction = Transaction(sender, recipient, amount)
-        veryfier = Veryfication()
-        if veryfier.verify_transaction(transaction, self.get_balance):
+        if Veryfication.verify_transaction(transaction, self.get_balance):
             self.open_transactions.append(transaction)
             self.save_data()
             return True
