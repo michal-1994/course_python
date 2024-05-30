@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 from hash_util import hash_string_256, hash_block
 import json
-import pickle
+# import pickle
 
 # Initializing our blockchain list
 MINING_REWARD = 10
@@ -52,7 +52,7 @@ def load_data():
     open_transactions = updated_transactions
 
 
-# load_data()
+load_data()
 
 
 def save_data():
@@ -72,7 +72,6 @@ def save_data():
 def valid_proof(transactions, last_hash, proof):
   guess = (str(transactions) + str(last_hash) + str(proof)).encode()
   guess_hash = hash_string_256(guess)
-  print(guess_hash)
   return guess_hash[0:2] == '00'
 
 
